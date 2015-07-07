@@ -1,5 +1,7 @@
 package br.edu.fatec.pizzaria.dao;
 
+import br.edu.fatec.pizzaria.model.Embalagem;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,8 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import br.edu.fatec.pizzaria.model.Embalagem;
 
 public class EmbalagemDao {
 
@@ -53,7 +53,7 @@ public class EmbalagemDao {
     }
   }
 
-  public void apagar(Long id_embalagen) {
+  public void apaga(Long id_embalagen) {
     String insert = "DELETE FROM embalagens WHERE id_embalagen=?";
 
     try (PreparedStatement statement = connection.prepareStatement(insert)) {
