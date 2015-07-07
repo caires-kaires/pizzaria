@@ -10,7 +10,7 @@ import java.util.List;
 
 import br.edu.fatec.pizzaria.model.Embalagem;
 
-public class EmbalagemDao {
+public class EmbalagemDao implements CrudDao<Embalagem, Long>{
 
   private Connection connection;
 
@@ -18,6 +18,7 @@ public class EmbalagemDao {
     this.connection = connection;
   }
 
+  @Override
   public void salva(Embalagem embalagem) {
     String insert = "INSERT INTO embalagens (embalagem, unidade) VALUES (?,?)";
 
@@ -34,11 +35,12 @@ public class EmbalagemDao {
       e.printStackTrace();
     }
   }
-
+  
+  @Override
   public void atualiza(Embalagem embalagem) {
-    String insert = "UPDATE embalagens set embalagem=?, unidade=? WHERE id_embalagen=?";
+    String update = "UPDATE embalagens set embalagem=?, unidade=? WHERE id_embalagen=?";
 
-    try (PreparedStatement statement = connection.prepareStatement(insert)) {
+    try (PreparedStatement statement = connection.prepareStatement(update)) {
       // inicia transacao
       connection.setAutoCommit(false);
 
@@ -53,10 +55,11 @@ public class EmbalagemDao {
     }
   }
 
-  public void apagar(Long id_embalagen) {
-    String insert = "DELETE FROM embalagens WHERE id_embalagen=?";
+  @Override
+  public void apaga(Long id_embalagen) {
+    String delete = "DELETE FROM embalagens WHERE id_embalagen=?";
 
-    try (PreparedStatement statement = connection.prepareStatement(insert)) {
+    try (PreparedStatement statement = connection.prepareStatement(delete)) {
       // inicia transacao
       connection.setAutoCommit(false);
 
@@ -69,10 +72,11 @@ public class EmbalagemDao {
     }
   }
 
+  @Override
   public Embalagem busca(Long id_embalagen) {
-    String insert = "SELECT id_embalagen, embalagem, unidade FROM embalagens WHERE id_embalagen=?";
+    String select = "SELECT id_embalagen, embalagem, unidade FROM embalagens WHERE id_embalagen=?";
 
-    try (PreparedStatement statement = connection.prepareStatement(insert)) {
+    try (PreparedStatement statement = connection.prepareStatement(select)) {
 
       statement.setLong(1, id_embalagen);
       
@@ -92,6 +96,7 @@ public class EmbalagemDao {
     return null;
   }
 
+  @Override
   public List<Embalagem> buscaTodos() {
     String query = "SELECT id_embalagen, embalagem, unidade FROM embalagens ORDER BY embalagem";
 
