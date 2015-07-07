@@ -10,7 +10,7 @@ import java.util.List;
 
 import br.edu.fatec.pizzaria.model.Embalagem;
 
-public class EmbalagemDao implements CrudDao<Embalagem, Long>{
+public class EmbalagemDao implements CrudDao<Embalagem, Long> {
 
   private Connection connection;
 
@@ -35,7 +35,7 @@ public class EmbalagemDao implements CrudDao<Embalagem, Long>{
       e.printStackTrace();
     }
   }
-  
+
   @Override
   public void atualiza(Embalagem embalagem) {
     String update = "UPDATE embalagens set embalagem=?, unidade=? WHERE id_embalagen=?";
@@ -79,7 +79,7 @@ public class EmbalagemDao implements CrudDao<Embalagem, Long>{
     try (PreparedStatement statement = connection.prepareStatement(select)) {
 
       statement.setLong(1, id_embalagen);
-      
+
       try (ResultSet resultSet = statement.executeQuery()) {
         if (resultSet.next()) {
           Embalagem embalagem = new Embalagem();
